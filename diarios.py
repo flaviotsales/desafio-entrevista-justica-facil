@@ -27,3 +27,6 @@ def getIdDiarioPorData(data: str):
     else:
         id = matches[0].replace('chamarCaptcha(', '')
         return id
+
+def baixaDiarioPorId(id, nomeArquivo = None):
+    pass
