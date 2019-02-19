@@ -9,7 +9,7 @@ class TseTests(unittest.TestCase):
     def test_getDiarioMd5PorData_diarioNaoExisteNaData_retornaNone(self):
         self.assertEqual(diarios.getDiarioMd5PorData('10/02/2018'), None)
 
-    def test_getIdDiarioPorData_diarioExisteNaData_retornaHash(self):
+    def test_getIdDiarioPorData_diarioExisteNaData_retornaId(self):
         self.assertEqual(diarios.getIdDiarioPorData('12/02/2018'), '96642')
 
     def test_getIdDiarioPorData_diarioNaoExisteNaData_retornaNone(self):
