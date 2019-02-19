@@ -2,29 +2,60 @@ import requests
 import re
 import hashlib
 
+tribunais = [
+    'TSE',
+    'AC',
+    'AL',
+    'AP',
+    'AM',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MG',
+    'MT',
+    'MS',
+    'PA',
+    'PB',
+    'PE',
+    'PR',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO',
+]
+
 def __hashFile(nomeArquivo):
     md5Hasher = hashlib.md5()
     with open(nomeArquivo, 'rb') as f:
         md5Hasher.update(f.read())
     return md5Hasher.hexdigest()
 
-def getDiarioMd5PorData(data: str):
-    id = getIdDiarioPorData(data)
+def getDiarioMd5PorData(data: str, tribunal: str):
+    id = getIdDiarioPorData(data, tribunal)
     if id == None:
         return None
 
     nomeArquivo = f'{id}.pdf'
-    baixaDiarioPorId(id, nomeArquivo)
+    baixaDiarioPorId(id, tribunal, nomeArquivo)
     return __hashFile(nomeArquivo)
 
-def getIdDiarioPorData(data: str):
+def getIdDiarioPorData(data: str, tribunal: str):
     url = 'http://inter03.tse.jus.br/sadJudDiarioDeJusticaConsulta/diarioTxt.do'
 
     response = requests.post(
         url,
         {
             'action': 'buscarDiarios',
-            'voDiarioSearch.tribunal': 'TSE',
+            'voDiarioSearch.tribunal': tribunal,
             'page': 'diarioPageTextualList.jsp',
             'voDiarioSearch.dataPubIni': data,
             'voDiarioSearch.dataPubFim': data
@@ -47,14 +78,14 @@ def __getFileNameFromHeader(headers):
         .replace('"', '')\
         .replace('/', '_')
 
-def baixaDiarioPorId(id, nomeArquivo = None):
+def baixaDiarioPorId(id: str, tribunal: str, nomeArquivo = None):
     url = 'http://inter03.tse.jus.br/sadJudDiarioDeJusticaConsulta/diario.do?action=downloadDiario'
     response = requests.post(
         url,
         {
             'captchaValidacao': 'ok',
             'id': id,
-            'tribunal': 'TSE'
+            'tribunal': tribunal
         }
     )
 
