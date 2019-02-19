@@ -20,7 +20,7 @@ def getIdDiarioPorData(data: str):
     
     html = str(response.content)
 
-    p = re.compile('chamarCaptcha\(\d+')
+    p = re.compile(r'chamarCaptcha\(\d+')
     matches = p.findall(html)
     if len(matches) == 0:
         return None
