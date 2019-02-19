@@ -1,8 +1,21 @@
 import requests
 import re
+import hashlib
+
+def __hashFile(nomeArquivo):
+    md5Hasher = hashlib.md5()
+    with open(nomeArquivo, 'rb') as f:
+        md5Hasher.update(f.read())
+    return md5Hasher.hexdigest()
 
 def getDiarioMd5PorData(data: str):
-    pass
+    id = getIdDiarioPorData(data)
+    if id == None:
+        return None
+
+    nomeArquivo = f'{id}.pdf'
+    baixaDiarioPorId(id, nomeArquivo)
+    return __hashFile(nomeArquivo)
 
 def getIdDiarioPorData(data: str):
     url = 'http://inter03.tse.jus.br/sadJudDiarioDeJusticaConsulta/diarioTxt.do'
