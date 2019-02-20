@@ -33,7 +33,7 @@ tribunais = [
     'TO',
 ]
 
-def __hashFile(nomeArquivo):
+def __hashFile(nomeArquivo: str):
     md5Hasher = hashlib.md5()
     with open(nomeArquivo, 'rb') as f:
         md5Hasher.update(f.read())
@@ -78,7 +78,7 @@ def __getFileNameFromHeader(headers):
         .replace('"', '')\
         .replace('/', '_')
 
-def baixaDiarioPorId(id: str, tribunal: str, nomeArquivo = None):
+def baixaDiarioPorId(id: str, tribunal: str, nomeArquivo: str = None):
     url = 'http://inter03.tse.jus.br/sadJudDiarioDeJusticaConsulta/diario.do?action=downloadDiario'
     response = requests.post(
         url,
