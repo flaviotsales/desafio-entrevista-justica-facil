@@ -96,3 +96,15 @@ def baixaDiarioPorId(id: str, tribunal: str, nomeArquivo = None):
 
         with open(nomeArquivo, 'wb') as f:
             f.write(response.content)
+
+def getMd5TodosTribunais(data: str):
+    '''
+    retorna uma lista de hash MD5 dos PDFs dos cadernos publicados na data buscada
+    '''
+    hashes = []
+    for tribunal in tribunais:
+        hash = getDiarioMd5PorData(data, tribunal)
+        hashes.append(hash)
+
+    return hashes
+    
